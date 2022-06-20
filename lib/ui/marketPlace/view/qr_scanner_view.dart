@@ -78,23 +78,8 @@ class _QrScannerViewState extends State<QrScannerView> {
       this.barcode = barcode;
       print("code is ${barcode.code}");
       if (!qrDetected) {
-       // Navigator.of(context).pop(barcode.code);
-        Navigator.of(context).pop("62ab418ae8152");
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => QrResultView(
-        //               result: barcode.code,
-        //             ))).whenComplete(() {
-        //   setState(() {
-        //     qrDetected = false;
-        //   });
-        // });
-        //   MaterialPageRoute(builder: (context) => QrResultView(result: "62ab418ae8152",))).whenComplete(() {
-        //   setState(() {
-        //     qrDetected = false;
-        //   });
-        // });
+        Navigator.of(context).pop(barcode.code);
+        // Navigator.of(context).pop("62ab418ae8152");
         qrDetected = true;
         setState(() {});
       }
