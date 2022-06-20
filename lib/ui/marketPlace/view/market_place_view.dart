@@ -84,83 +84,79 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                                     .filteredOrdersWithServiceProvider.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        child: Container(
-                                          height: 50,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: model
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Card(
+                                      child: Container(
+                                        height: 50,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 50,
+                                              width: 50,
+                                              child: CachedNetworkImage(
+                                                imageUrl: model
+                                                    .filteredOrdersWithServiceProvider[
+                                                        index]
+                                                    .lineItems[0]
+                                                    .image
+                                                    .src,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  model
                                                       .filteredOrdersWithServiceProvider[
                                                           index]
                                                       .lineItems[0]
-                                                      .image
-                                                      .src,
-                                                  fit: BoxFit.cover,
+                                                      .name
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 21,
+                                                      color: black),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    model
-                                                        .filteredOrdersWithServiceProvider[
-                                                            index]
-                                                        .lineItems[0]
-                                                        .name
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 21,
-                                                        color: black),
-                                                  ),
-                                                  Text(
-                                                    model
-                                                            .filteredOrdersWithServiceProvider[
-                                                                index]
-                                                            .status
-                                                            .toString()
-                                                            .toUpperCase() +
-                                                        ' ' +
-                                                        model
-                                                            .filteredOrdersWithServiceProvider[
-                                                                index]
-                                                            .id
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: model
-                                                                    .filteredOrdersWithServiceProvider[
-                                                                        index]
-                                                                    .status ==
-                                                                "pending"
-                                                            ? red
-                                                            : model.filteredOrdersWithServiceProvider[index]
-                                                                        .status ==
-                                                                    "processing"
-                                                                ? Colors.blue
-                                                                : Colors.green),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                Text(
+                                                  model
+                                                      .filteredOrdersWithServiceProvider[
+                                                          index]
+                                                      .status
+                                                      .toString()
+                                                      .toUpperCase(),
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: model
+                                                                  .filteredOrdersWithServiceProvider[
+                                                                      index]
+                                                                  .status ==
+                                                              "pending"
+                                                          ? red
+                                                          : model
+                                                                      .filteredOrdersWithServiceProvider[
+                                                                          index]
+                                                                      .status ==
+                                                                  "processing"
+                                                              ? Colors.blue
+                                                              : Colors.green),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    );
+                                    ),
+                                  );
                                 }),
                       ),
                     ],

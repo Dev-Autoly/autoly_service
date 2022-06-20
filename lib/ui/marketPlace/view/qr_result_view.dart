@@ -117,17 +117,11 @@ class _QrResultViewState extends State<QrResultView> {
                                                           vertical: 20.0),
                                                       child: Text(
                                                         model
-                                                                .allMatchingOrders[
-                                                                    index]
-                                                                .lineItems[0]
-                                                                .name
-                                                                .toString() +
-                                                            " " +
-                                                            model
-                                                                .allMatchingOrders[
-                                                                    index]
-                                                                .id
-                                                                .toString(),
+                                                            .allMatchingOrders[
+                                                                index]
+                                                            .lineItems[0]
+                                                            .name
+                                                            .toString(),
                                                         style: TextStyle(
                                                             fontSize: 21,
                                                             color: black),
