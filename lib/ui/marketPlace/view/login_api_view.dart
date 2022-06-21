@@ -36,10 +36,10 @@ class _LoginApiViewState extends State<LoginApiView> {
       await _authProv
           .login(
         // *********  static values for fast login  *********
-        email: "mohamed.ahmed8902@gmail.com",
-        password: "testuser123#",
-        // email: _emailController.text.trim().toString(), // "mohamed.ahmed8902@gmail.com",
-        // password: _passwordController.text.trim().toString(), // "testuser123#",
+        // email: "mohamed.ahmed8902@gmail.com",
+        // password: "testuser123#",
+        email: _emailController.text.trim().toString(), // "mohamed.ahmed8902@gmail.com",
+        password: _passwordController.text.trim().toString(), // "testuser123#",
       )
           .then((value) {
         _authProv.setLoading();
