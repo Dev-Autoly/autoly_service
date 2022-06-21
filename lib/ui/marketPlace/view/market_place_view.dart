@@ -64,6 +64,7 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                       width: 25,
                       child: CircularProgressIndicator(
                         backgroundColor: azure,
+                        color: Colors.white,
                       ),
                     ),
                   ),

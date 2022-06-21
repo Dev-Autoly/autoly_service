@@ -37,11 +37,12 @@ class _QrResultViewState extends State<QrResultView> {
                       width: 25,
                       child: CircularProgressIndicator(
                         backgroundColor: azure,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 )
-              : model.isQrCodeValid(widget.result)
+              : !model.isQrCodeValid(widget.result)
                   ? Center(
                       //  child: Text("Invalid barcode"),
                       child: Text(

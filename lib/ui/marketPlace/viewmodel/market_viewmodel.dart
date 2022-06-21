@@ -62,6 +62,7 @@ class MarketViewModel extends BaseViewModel {
     // try to call your api
     // await login(email: "mohamed.ahmed8902@gmail.com", password: "testuser123#");
     //  await getAllProducts();
+    print("scan result 1 is $filterData");
     await getAllOrders(filterData);
   }
 
@@ -157,6 +158,7 @@ class MarketViewModel extends BaseViewModel {
         // }
         // filteredOrdersWithServiceProvider
         changeBusyState(false);
+        print("scan result 2 is $scanResult");
         filteringOrders(scanResult);
         notifyListeners();
       } else {
@@ -289,25 +291,20 @@ class MarketViewModel extends BaseViewModel {
 
   void filteringOrders(String scanResult) {
     allMatchingOrders.clear();
-    // if (filteredOrdersWithServiceProvider.isEmpty) {
-    //   return;
-    // }
-    // for (int i = 0; i < filteredOrdersWithServiceProvider.length; i++) {
-    //   if (filteredOrdersWithServiceProvider[i]
-    //       .barcodeUrl
-    //       .contains(scanResult)) {
-    //     allMatchingOrders.add(filteredOrdersWithServiceProvider[i]);
-    //   }
-    // }
-
     if (allOrders.isEmpty) {
       return;
     }
+
     for (int i = 0; i < allOrders.length; i++) {
+      print("scan result $scanResult");
+      print("scan result ${allOrders[i].barcodeUrl}");
       if (allOrders[i].barcodeUrl.contains(scanResult)) {
+        print("order added $i");
         allMatchingOrders.add(allOrders[i]);
       }
     }
+
+    print("order added $allMatchingOrders");
 
     setCheckingOrders();
     notifyListeners();
@@ -319,17 +316,25 @@ class MarketViewModel extends BaseViewModel {
       return false;
     }
     print("all orders length is ${allOrders.length}");
-    for (int i = 0; i < allOrders.length; i++) {
-      if (allOrders[i].barcodeUrl.contains(scanResult)) {
-        print("scan result for $scanResult is true");
-        return true;
-      } else {
-        print("scan result for $scanResult is false");
-        return false;
-      }
+    final target = allOrders.where((item) => item.barcodeUrl.contains(scanResult));
+    print("target is $target}");
+    if(target == null) {
+      return false;
+    }else {
+      return true;
     }
-    // setCheckingOrders();
-    // notifyListeners();
+    // return false;
+    // for (int i = 0; i < allOrders.length; i++) {
+    //   if (allOrders[i].barcodeUrl.contains(scanResult)) {
+    //     print("scan result for $scanResult is true");
+    //     return true;
+    //   } else {
+    //     print("scan result for $scanResult is false");
+    //     return false;
+    //   }
+    // }
+    // // setCheckingOrders();
+    // // notifyListeners();
   }
 
   Future<void> setOrderServiceProvider(int orderId, Order order) async {

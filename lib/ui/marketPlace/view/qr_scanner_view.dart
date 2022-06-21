@@ -78,8 +78,8 @@ class _QrScannerViewState extends State<QrScannerView> {
       this.barcode = barcode;
       print("code is ${barcode.code}");
       if (!qrDetected) {
-        Navigator.of(context).pop(barcode.code);
-        // Navigator.of(context).pop("62ab418ae8152");
+       Navigator.of(context).pop(barcode.code);
+       // Navigator.of(context).pop("62ab418ae8152");
         qrDetected = true;
         setState(() {});
       }
