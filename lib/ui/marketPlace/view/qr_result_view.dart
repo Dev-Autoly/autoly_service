@@ -30,8 +30,8 @@ class _QrResultViewState extends State<QrResultView> {
               ? Container(
                   height: screen.height,
                   width: screen.width,
-                  decoration: BoxDecoration(color: white),
-                  child: Center(
+                  decoration: const BoxDecoration(color: white),
+                  child: const Center(
                     child: SizedBox(
                       height: 25,
                       width: 25,
@@ -43,7 +43,7 @@ class _QrResultViewState extends State<QrResultView> {
                   ),
                 )
               : !model.isQrCodeValid(widget.result)
-                  ? Center(
+                  ? const Center(
                       //  child: Text("Invalid barcode"),
                       child: Text(
                         "This qr code is not valid",
@@ -56,11 +56,11 @@ class _QrResultViewState extends State<QrResultView> {
                         children: [
                           Expanded(
                             child: model.allMatchingOrders.isEmpty
-                                ? Center(
+                                ? const Center(
                                     //  child: Text("Invalid barcode"),
-                                    child: Text(
+                                    child:  Text(
                                       "This service is not assigned to you",
-                                      style: TextStyle(fontSize: 20),
+                                      style:  TextStyle(fontSize: 20),
                                     ),
                                     // this service is not assigned to you => find nothing
                                   )
@@ -68,11 +68,11 @@ class _QrResultViewState extends State<QrResultView> {
                                     itemCount: model.allMatchingOrders.length,
                                     itemBuilder: (context, index) {
                                       return Container(
-                                        margin: EdgeInsets.symmetric(
+                                        margin: const EdgeInsets.symmetric(
                                           horizontal: 5,
                                           vertical: 5,
                                         ),
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(15)),
                                         ),
@@ -86,11 +86,12 @@ class _QrResultViewState extends State<QrResultView> {
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                   child: Container(
+                                                    height: 250,
                                                     margin:
-                                                        EdgeInsets.symmetric(
+                                                        const EdgeInsets.symmetric(
                                                       horizontal: 5,
                                                     ),
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
@@ -104,7 +105,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                           .lineItems[0]
                                                           .image
                                                           .src,
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                     ),
                                                   ),
                                                 ),
@@ -123,7 +124,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                             .lineItems[0]
                                                             .name
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 21,
                                                             color: black),
                                                       ),
@@ -155,7 +156,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             model.allMatchingOrders[index]
@@ -166,12 +167,11 @@ class _QrResultViewState extends State<QrResultView> {
                                                             index])
                                                 ? Container()
                                                 : model.updatingOrder
-                                                    ? Center(
+                                                    ? const Center(
                                                         child: SizedBox(
                                                           height: 25,
                                                           width: 25,
-                                                          child:
-                                                              CircularProgressIndicator(
+                                                          child: CircularProgressIndicator(
                                                             backgroundColor:
                                                                 azure,
                                                           ),
@@ -219,11 +219,10 @@ class _QrResultViewState extends State<QrResultView> {
                                                           width: 300,
                                                           height: 50,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             color:
                                                                 carnationPink,
-                                                            borderRadius:
-                                                                BorderRadius
+                                                            borderRadius: BorderRadius
                                                                     .all(Radius
                                                                         .circular(
                                                                             20)),
@@ -241,7 +240,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                                           "processing"
                                                                       ? 'End the service'
                                                                       : "",
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 20),
                                                             ),
                                                           ),

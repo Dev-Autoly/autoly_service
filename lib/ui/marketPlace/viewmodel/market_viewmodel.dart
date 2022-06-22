@@ -474,6 +474,9 @@ class MarketViewModel extends BaseViewModel {
 
   bool filteringMatchingOrders(Order order) {
     List<OrderMetaDatum> meta = order.metaData;
+    if(order.status == "pending"){
+      return true;
+    }
     for (int j = 0; j < meta.length; j++) {
       if (meta[j].value == id) {
         return true;

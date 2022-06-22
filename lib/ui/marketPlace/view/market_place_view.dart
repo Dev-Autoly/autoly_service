@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:autoly_service/ui/marketPlace/view/login_api_view.dart';
 import 'package:autoly_service/ui/marketPlace/view/qr_result_view.dart';
@@ -7,6 +8,7 @@ import 'package:autoly_service/utils/common_const.dart';
 import 'package:autoly_service/utils/shared_preferences/shared_preferences_helper.dart';
 import 'package:autoly_service/utils/theme_const.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stacked/stacked.dart';
 
 class MarketPlaceView extends StatefulWidget {
@@ -170,16 +172,20 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                 context,
                 MaterialPageRoute(builder: (context) => QrScannerView()),
               );
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => QrResultView(result: txt)))
-                  .whenComplete(
-                () async {
-                  model.changeBusyState(true);
-                  await model.getAllOrders("");
-                },
-              );
+              if(txt != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => QrResultView(result: txt)))
+                    .whenComplete(
+                      () async {
+                    model.changeBusyState(true);
+                    await model.getAllOrders("");
+                  },
+                );
+              }else {
+                Fluttertoast.showToast(msg: "Please try again, we could't recgonize qr code", textColor: white, backgroundColor: red);
+              }
             },
             child: Text("Scan"),
           ),
