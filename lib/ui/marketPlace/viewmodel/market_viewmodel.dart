@@ -472,13 +472,23 @@ class MarketViewModel extends BaseViewModel {
     }
   }
 
+  bool filteringMatchingOrdersWithZero(Order order) {
+    List<OrderMetaDatum> meta = order.metaData;
+    for (int j = 0; j < meta.length; j++) {
+      if (meta[j].value == "0") {
+        return true;
+      }
+    }
+    return false;
+  }
+
   bool filteringMatchingOrders(Order order) {
     List<OrderMetaDatum> meta = order.metaData;
-    if(order.status == "pending"){
-      return true;
-    }
+    // if(order.status == "pending"){
+    //   return true;
+    // }
     for (int j = 0; j < meta.length; j++) {
-      if (meta[j].value == id) {
+      if (meta[j].value == id || meta[j].value == "0") {
         return true;
       }
     }

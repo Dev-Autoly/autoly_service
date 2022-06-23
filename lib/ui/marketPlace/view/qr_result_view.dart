@@ -58,9 +58,9 @@ class _QrResultViewState extends State<QrResultView> {
                             child: model.allMatchingOrders.isEmpty
                                 ? const Center(
                                     //  child: Text("Invalid barcode"),
-                                    child:  Text(
+                                    child: Text(
                                       "This service is not assigned to you",
-                                      style:  TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                     // this service is not assigned to you => find nothing
                                   )
@@ -87,11 +87,12 @@ class _QrResultViewState extends State<QrResultView> {
                                                       BorderRadius.circular(10),
                                                   child: Container(
                                                     height: 250,
-                                                    margin:
-                                                        const EdgeInsets.symmetric(
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
                                                       horizontal: 5,
                                                     ),
-                                                    decoration: const BoxDecoration(
+                                                    decoration:
+                                                        const BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
@@ -130,12 +131,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      model
-                                                          .allMatchingOrders[
-                                                              index]
-                                                          .status
-                                                          .toString()
-                                                          .toUpperCase(),
+                                                      "${model.allMatchingOrders[index].status.toString().toUpperCase()} ${model.allMatchingOrders[index].id}",
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
@@ -171,7 +167,8 @@ class _QrResultViewState extends State<QrResultView> {
                                                         child: SizedBox(
                                                           height: 25,
                                                           width: 25,
-                                                          child: CircularProgressIndicator(
+                                                          child:
+                                                              CircularProgressIndicator(
                                                             backgroundColor:
                                                                 azure,
                                                           ),
@@ -182,10 +179,13 @@ class _QrResultViewState extends State<QrResultView> {
                                                           model
                                                               .setCheckingOrders();
                                                           if (model
-                                                                  .allMatchingOrders[
-                                                                      index]
-                                                                  .status ==
-                                                              "pending") {
+                                                                      .allMatchingOrders[
+                                                                          index]
+                                                                      .status ==
+                                                                  "pending" ||
+                                                              model.filteringMatchingOrdersWithZero(
+                                                                  model.allMatchingOrders[
+                                                                      index])) {
                                                             await model.updateOrderWithDio(
                                                                 model
                                                                     .allMatchingOrders[
@@ -222,26 +222,29 @@ class _QrResultViewState extends State<QrResultView> {
                                                               const BoxDecoration(
                                                             color:
                                                                 carnationPink,
-                                                            borderRadius: BorderRadius
+                                                            borderRadius:
+                                                                BorderRadius
                                                                     .all(Radius
                                                                         .circular(
                                                                             20)),
                                                           ),
                                                           child: Center(
                                                             child: Text(
-                                                              model
-                                                                          .allMatchingOrders[
-                                                                              index]
-                                                                          .status ==
-                                                                      "pending"
+                                                              model.allMatchingOrders[index].status ==
+                                                                          "pending" ||
+                                                                      model.filteringMatchingOrdersWithZero(
+                                                                          model.allMatchingOrders[
+                                                                              index])
                                                                   ? "Start the service"
                                                                   : model.allMatchingOrders[index]
                                                                               .status ==
                                                                           "processing"
                                                                       ? 'End the service'
                                                                       : "",
-                                                              style: const TextStyle(
-                                                                  fontSize: 20),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          20),
                                                             ),
                                                           ),
                                                         ),
