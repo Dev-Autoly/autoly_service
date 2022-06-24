@@ -42,17 +42,17 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: Icon(Icons.logout, size: 25, color: white)),
               ),
-              GestureDetector(
-                onTap: () async {
-                  // model.setLoading();
-                  model.changeBusyState(true);
-                  await model.resetOrder(384);
-                  await model.getAllOrders("");
-                },
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Icon(Icons.repeat, size: 25, color: white)),
-              ),
+              // GestureDetector(
+              //   onTap: () async {
+              //     // model.setLoading();
+              //     model.changeBusyState(true);
+              //     await model.resetOrder(384);
+              //     await model.getAllOrders("");
+              //   },
+              //   child: Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: 8),
+              //       child: Icon(Icons.repeat, size: 25, color: white)),
+              // ),
             ],
           ),
           body: model.isBusy
@@ -90,7 +90,7 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Card(
                                       child: Container(
-                                        height: 50,
+                                        height: 60,
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 15, vertical: 10),
                                         child: Row(
@@ -126,6 +126,19 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontSize: 21,
+                                                      color: black),
+                                                ),
+                                                Text(
+                                                  "Order number: ${model
+                                                      .filteredOrdersWithServiceProvider[
+                                                  index]
+                                                      .id
+                                                      .toString()
+                                                      .toUpperCase()}",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                      FontWeight.bold,
                                                       color: black),
                                                 ),
                                                 Text(

@@ -131,7 +131,7 @@ class _QrResultViewState extends State<QrResultView> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${model.allMatchingOrders[index].status.toString().toUpperCase()} ${model.allMatchingOrders[index].id}",
+                                                      "${model.allMatchingOrders[index].status.toString().toUpperCase()} ",
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
@@ -147,6 +147,18 @@ class _QrResultViewState extends State<QrResultView> {
                                                                       "processing"
                                                                   ? Colors.blue
                                                                   : Colors.green),
+                                                    ),
+
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 10.0),
+                                                      child: Text(
+                                                        "Order number : ${model.allMatchingOrders[index].id.toString().toUpperCase()}",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.bold,
+                                                            color: black),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
