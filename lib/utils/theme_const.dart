@@ -104,6 +104,7 @@ const robinsEggThree = const Color(0xff74e0ff);
 const slate = const Color(0xff545c75);
 const uglyBlue = const Color(0xff2b6a92);
 const orangeYello = const Color(0xffffb100);
+const brightCyan = Color(0xff46f8ff);
 
 
 Widget buildHeaderWithImage(BuildContext context) {

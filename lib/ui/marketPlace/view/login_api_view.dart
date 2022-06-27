@@ -36,10 +36,10 @@ class _LoginApiViewState extends State<LoginApiView> {
       await _authProv
           .login(
         // *********  static values for fast login  *********
-        // email: "mohamed.ahmed8902@gmail.com",
-        // password: "testuser123#",
-        email: _emailController.text.trim().toString(), // "mohamed.ahmed8902@gmail.com",
-        password: _passwordController.text.trim().toString(), // "testuser123#",
+        email: "mohamed.ahmed8902@gmail.com",
+        password: "testuser123#",
+        // email: _emailController.text.trim().toString(),
+        // password: _passwordController.text.trim().toString(), // "testuser123#",
       )
           .then((value) {
         _authProv.setLoading();
@@ -72,13 +72,15 @@ class _LoginApiViewState extends State<LoginApiView> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
+      backgroundColor: oceanBlueThree,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        buildHeaderWithImage(context),
+        // buildHeaderWithImage(context),
+        SizedBox(height: 250,),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: const Text("Sign in",
               style: TextStyle(
-                  color: dusk,
+                  color: white, // dusk,
                   fontWeight: FontWeight.w600,
                   fontFamily: "Poppins",
                   fontStyle: FontStyle.normal,
@@ -111,14 +113,17 @@ class _LoginApiViewState extends State<LoginApiView> {
                           filled: true,
                           fillColor: whiteTwo,
                           //warmGrey,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
                           enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: waterBlue),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: oceanBlueThree),
                           ),
                           focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(color: waterBlue),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: oceanBlueThree),
                           ),
                           errorBorder: const OutlineInputBorder(
                             borderRadius:
@@ -157,15 +162,17 @@ class _LoginApiViewState extends State<LoginApiView> {
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 10),
                             enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
                               borderSide: BorderSide(
-                                color: waterBlue,
+                                color: oceanBlueThree,
                               ),
                             ),
                             focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
                               borderSide: BorderSide(
-                                color: waterBlue,
+                                color: oceanBlueThree,
                               ),
                             ),
                             errorBorder: const OutlineInputBorder(
@@ -185,24 +192,48 @@ class _LoginApiViewState extends State<LoginApiView> {
                           keyboardType: TextInputType.text,
                         )),
                     SizedBox(
-                      height: 30.getHeight(),
+                      height: 5.getHeight(),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: width * 0.1, vertical: 15),
+                        child: InkWell(
+                          onTap: () async {},
+                          child: Text('Forget password?',
+                              style: TextStyle(
+                                color: Colors.grey, // waterBlue,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Roboto",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.getFontSize(),
+                              ),
+                              textAlign: TextAlign.left),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.getHeight(),
                     ),
                     Consumer<AuthProvider>(
                       builder: (ctx, authprov, child) => authprov.loading
                           ? const Center(child: CircularProgressIndicator())
                           : SizedBox(
                               height: 50,
-                              width: width * 0.85,
+                              width: width * 0.75,
                               //   padding: EdgeInsets.all(10.0),
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  side: const BorderSide(color: Color(0xff0fa2cf)),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: const BorderSide(
+                                      color: pinkish,),
+                                //Color(0xff0fa2cf)),
                                 ),
                                 onPressed: () async {
                                   _login();
                                 },
-                                color: const Color(0xff0fa2cf),
+                                color: pinkish, // Color(0xff0fa2cf),
                                 textColor: Colors.white,
                                 child: Text("Sign in ",
                                     style: TextStyle(
