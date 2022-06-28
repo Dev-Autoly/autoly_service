@@ -105,7 +105,10 @@ const slate = const Color(0xff545c75);
 const uglyBlue = const Color(0xff2b6a92);
 const orangeYello = const Color(0xffffb100);
 const brightCyan = Color(0xff46f8ff);
-
+const weirdGreen = Color(0xff2be161);
+const brightLightBlue = Color(0xff31ceff);
+const sicklyYellow = Color(0xffd6e047);
+const paleGrey = Color(0xffdde1e6);
 
 Widget buildHeaderWithImage(BuildContext context) {
   Size size = MediaQuery.of(context).size;
