@@ -37,10 +37,10 @@ class _LoginApiViewState extends State<LoginApiView> {
       await _authProv
           .login(
         // *********  static values for fast login  *********
-        email: "mohamed.ahmed8902@gmail.com",
-        password: "testuser123#",
-        // email: _emailController.text.trim().toString(),
-        // password: _passwordController.text.trim().toString(), // "testuser123#",
+        // email: "mohamed.ahmed8902@gmail.com",
+        // password: "testuser123#",
+        email: _emailController.text.trim().toString(),
+        password: _passwordController.text.trim().toString(), // "testuser123#",
       )
           .then((value) {
         _authProv.setLoading();
@@ -73,54 +73,100 @@ class _LoginApiViewState extends State<LoginApiView> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
-      backgroundColor: oceanBlueThree,
-      body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          // buildHeaderWithImage(context),
-          const SizedBox(
-            height: 80,
+      backgroundColor: oceanBlue,
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        // buildHeaderWithImage(context),
+        const SizedBox(
+          height: 90,
+        ),
+        Center(
+          child: Image.asset(
+            autolyTrade,
+            width: 220.getWidth(),
           ),
-          Center(
-            child: Image.asset(
-              autolyTrade,
-              width: 220.getWidth(),
-            ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Text("Sign in",
-                style: TextStyle(
-                    color: white,
-                    // dusk,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "Poppins",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 32.0),
-                textAlign: TextAlign.left),
-          ),
-          SizedBox(
-            height: 20.getHeight(),
-          ),
-          Expanded(
-            child: Form(
-              key: _formKey,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: width * 0.85,
+        ),
+        const SizedBox(
+          height: 50,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: const Text("Sign in",
+              style: TextStyle(
+                  color: white,
+                  // dusk,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Poppins",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 32.0),
+              textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          height: 20.getHeight(),
+        ),
+        Expanded(
+          child: Form(
+            key: _formKey,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: width * 0.85,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        focusNode: _userEmailFocus,
+                        style: TextStyle(
+                            color: Colors.black, fontSize: 20.getFontSize()),
+                        decoration: InputDecoration(
+                          hintText: 'email@gmail.com',
+                          hintStyle: TextStyle(
+                              color: Colors.grey, fontSize: 20.getFontSize()),
+                          filled: true,
+                          fillColor: whiteTwo,
+                          //warmGrey,
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: oceanBlue),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: oceanBlue),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                        ),
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value.isEmpty || !value.contains('@')) {
+                            return 'Please enter a valid email address.!';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.getHeight(),
+                    ),
+                    Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10),
+                        width: width * 0.85,
                         child: TextFormField(
-                          focusNode: _userEmailFocus,
                           style: TextStyle(
                               color: Colors.black, fontSize: 20.getFontSize()),
+                          obscureText: true,
                           decoration: InputDecoration(
-                            hintText: 'email@gmail.com',
+                            hintText: 'Your password',
                             hintStyle: TextStyle(
                                 color: Colors.grey, fontSize: 20.getFontSize()),
                             filled: true,
@@ -130,13 +176,17 @@ class _LoginApiViewState extends State<LoginApiView> {
                                 const EdgeInsets.symmetric(horizontal: 10),
                             enabledBorder: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: oceanBlueThree),
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(
+                                color: oceanBlue,
+                              ),
                             ),
                             focusedBorder: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: oceanBlueThree),
+                              borderSide: BorderSide(
+                                color: oceanBlue,
+                              ),
                             ),
                             errorBorder: const OutlineInputBorder(
                               borderRadius:
@@ -144,134 +194,84 @@ class _LoginApiViewState extends State<LoginApiView> {
                               borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
+                          focusNode: _passwordFocus,
                           validator: (value) {
-                            if (value.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address.!';
+                            if (value.isEmpty || value.length < 7) {
+                              return 'Password must be at least 7 characters long.';
                             }
                             return null;
                           },
+                          controller: _passwordController,
+                          keyboardType: TextInputType.text,
+                        )),
+                    SizedBox(
+                      height: 5.getHeight(),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: width * 0.1, vertical: 15),
+                        child: InkWell(
+                          onTap: () async {},
+                          child: Text('Forget password?',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                // waterBlue,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Roboto",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.getFontSize(),
+                              ),
+                              textAlign: TextAlign.left),
                         ),
                       ),
-                      SizedBox(
-                        height: 20.getHeight(),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          width: width * 0.85,
-                          child: TextFormField(
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 20.getFontSize()),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: 'Your password',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey, fontSize: 20.getFontSize()),
-                              filled: true,
-                              fillColor: whiteTwo,
-                              //warmGrey,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                                borderSide: BorderSide(
-                                  color: oceanBlueThree,
+                    ),
+                    SizedBox(
+                      height: 5.getHeight(),
+                    ),
+                    Consumer<AuthProvider>(
+                      builder: (ctx, authprov, child) => authprov.loading
+                          ? const Center(child: CircularProgressIndicator())
+                          : SizedBox(
+                              height: 50,
+                              width: width * 0.75,
+                              //   padding: EdgeInsets.all(10.0),
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: const BorderSide(
+                                    color: pinkish,
+                                  ),
+                                  //Color(0xff0fa2cf)),
                                 ),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                  color: oceanBlueThree,
-                                ),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(color: Colors.red),
+                                onPressed: () async {
+                                  _login();
+                                },
+                                color: pinkish,
+                                // Color(0xff0fa2cf),
+                                textColor: Colors.white,
+                                child: Text("Sign in ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: "Grandstander",
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 30.getFontSize()),
+                                    textAlign: TextAlign.left),
                               ),
                             ),
-                            focusNode: _passwordFocus,
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 7) {
-                                return 'Password must be at least 7 characters long.';
-                              }
-                              return null;
-                            },
-                            controller: _passwordController,
-                            keyboardType: TextInputType.text,
-                          )),
-                      SizedBox(
-                        height: 5.getHeight(),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.1, vertical: 15),
-                          child: InkWell(
-                            onTap: () async {},
-                            child: Text('Forget password?',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  // waterBlue,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: "Roboto",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 20.getFontSize(),
-                                ),
-                                textAlign: TextAlign.left),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.getHeight(),
-                      ),
-                      Consumer<AuthProvider>(
-                        builder: (ctx, authprov, child) => authprov.loading
-                            ? const Center(child: CircularProgressIndicator())
-                            : SizedBox(
-                                height: 50,
-                                width: width * 0.75,
-                                //   padding: EdgeInsets.all(10.0),
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    side: const BorderSide(
-                                      color: pinkish,
-                                    ),
-                                    //Color(0xff0fa2cf)),
-                                  ),
-                                  onPressed: () async {
-                                    _login();
-                                  },
-                                  color: pinkish,
-                                  // Color(0xff0fa2cf),
-                                  textColor: Colors.white,
-                                  child: Text("Sign in ",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Grandstander",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 30.getFontSize()),
-                                      textAlign: TextAlign.left),
-                                ),
-                              ),
-                      ),
-                      SizedBox(
-                        height: 30.getHeight(),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 280.getHeight(),
+                    ),
+                  ],
                 ),
+              ),
             ),
           ),
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }
