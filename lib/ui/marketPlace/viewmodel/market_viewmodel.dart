@@ -28,7 +28,6 @@ class MarketViewModel extends BaseViewModel {
   List<Order> allMatchingOrders = [];
   bool _isUpdatingOrder = false;
 
-  // bool _isResetCompleted = true;
 
   void setCurrentUser(User currentUser) {
     _currentUser = currentUser;
@@ -483,10 +482,12 @@ class MarketViewModel extends BaseViewModel {
   }
 
   bool filteringMatchingOrders(Order order) {
+    // await initShared();
     List<OrderMetaDatum> meta = order.metaData;
     // if(order.status == "pending"){
     //   return true;
     // }
+    print("id is $id");
     for (int j = 0; j < meta.length; j++) {
       if (meta[j].value == id || meta[j].value == "0") {
         return true;
@@ -494,5 +495,79 @@ class MarketViewModel extends BaseViewModel {
     }
     return false;
     // notifyListeners();
+  }
+
+  Future<void> updateOrderFromDetails(
+      int orderId, OrderStatus orderStatus, Order order) async {
+    setUpdatingOrder();
+    String currentStatus = "";
+    switch (orderStatus) {
+      case OrderStatus.pending:
+        currentStatus = "processing";
+        break;
+      case OrderStatus.processing:
+        currentStatus = "completed";
+        break; //
+      case OrderStatus.completed:
+        currentStatus = "completed";
+        break;
+    }
+
+    await initShared();
+    Dio dio = Dio();
+
+    String username = 'ck_b7eba9916a83584a70889381b9f287d80e1e0ad1';
+    String password = 'cs_ede70fc67aa49b14d1a4331ea069c59ddce2e8f8';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+    List<OrderMetaDatum> orderMetaData = order.metaData;
+
+    var target =
+    orderMetaData.firstWhere((item) => item.key == 'service_provider');
+    if (target != null) {
+      target.value = id;
+    }
+    print(orderMetaData[1].value.toString());
+
+    var headers = {
+      'Authorization':
+      'Basic Y2tfYjdlYmE5OTE2YTgzNTg0YTcwODg5MzgxYjlmMjg3ZDgwZTFlMGFkMTpjc19lZGU3MGZjNjdhYTQ5YjE0ZDFhNDMzMWVhMDY5YzU5ZGRjZTJlOGY4'
+    };
+
+    print("print ${orderMetaData[1].value.toString()}");
+
+    var body = {
+      //  "meta_data": json.encoder.convert(orderMetaData),
+      "status": currentStatus,
+      "meta_data": orderMetaData.toList(), // json.encode(orderMetaData),
+    };
+
+    try {
+      var response = await dio.put(
+        'https://autoly.io/shop/wp-json/wc/v3/orders/$orderId',
+        data: json.encode(body),
+        options: Options(headers: headers),
+        // headers: headers,
+        // body:json.encode(body),
+        // body: {
+        //   "meta_data": json.encoder.convert(orderMetaData),
+        //  //  "meta_data": orderMetaData.toList(), // json.encode(orderMetaData),
+        // }
+      );
+      if (response.statusCode == 200) {
+        print('order updated successfully');
+        setUpdatingOrder();
+        notifyListeners();
+      } else {
+        print('failed to update order');
+        setUpdatingOrder();
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error:${e.toString()}');
+      changeBusyState(false);
+      notifyListeners();
+    }
   }
 }

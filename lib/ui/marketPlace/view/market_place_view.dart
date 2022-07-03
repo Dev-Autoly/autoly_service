@@ -1,3 +1,4 @@
+import 'package:autoly_service/ui/marketPlace/view/order_details_view.dart';
 import 'package:autoly_service/utils/image_selector.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -120,13 +121,7 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                                 await model.getAllOrders("");
                               },
                             );
-                          } else {
-                            // Fluttertoast.showToast(
-                            //     msg:
-                            //         "Please try again, we could't recgonize qr code",
-                            //     textColor: white,
-                            //     backgroundColor: red);
-                          }
+                          } else {}
                         },
                         child: Center(
                           child: Container(
@@ -183,196 +178,236 @@ class _MarketPlaceViewState extends State<MarketPlaceView> {
                       Expanded(
                         child: model.filteredOrdersWithServiceProvider.isEmpty
                             ? const Center(
-                                child: Text("No orders found"),
+                                child: Text(
+                                  "No orders found",
+                                  style: const TextStyle(
+                                      fontSize: 21, color: white),
+                                ),
                               )
                             : ListView.builder(
                                 itemCount: model
                                     .filteredOrdersWithServiceProvider.length,
                                 itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 100,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      decoration: BoxDecoration(
-                                          color: oceanBlueThree,
-                                          border: Border.all(
-                                            color: cerulean,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          ClipRRect(
+                                  return InkWell(
+                                    onTap: () async {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => OrderDetailsView(
+                                                isMine: model.filteringMatchingOrders(model.filteredOrdersWithServiceProvider[index]),
+                                                  order: model
+                                                          .filteredOrdersWithServiceProvider[
+                                                      index]))).whenComplete(
+                                        () async {
+                                          model.changeBusyState(true);
+                                          await model.getAllOrders("");
+                                        },
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 100,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        decoration: BoxDecoration(
+                                            color: oceanBlueThree,
+                                            border: Border.all(
+                                              color: cerulean,
+                                            ),
                                             borderRadius:
                                                 const BorderRadius.all(
-                                              Radius.circular(8),
-                                            ),
-                                            child: SizedBox(
-                                              height: 70,
-                                              width: 70,
-                                              child: CachedNetworkImage(
-                                                imageUrl: model
-                                                    .filteredOrdersWithServiceProvider[
-                                                        index]
-                                                    .lineItems[0]
-                                                    .image
-                                                    .src,
-                                                fit: BoxFit.cover,
+                                                    Radius.circular(20))),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(8),
                                               ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 8.0),
-                                                child: Text(
-                                                  model
+                                              child: SizedBox(
+                                                height: 70,
+                                                width: 70,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: model
                                                       .filteredOrdersWithServiceProvider[
                                                           index]
                                                       .lineItems[0]
-                                                      .name
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 21,
-                                                      color: white),
+                                                      .image
+                                                      .src,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 6.0),
-                                                child: Text(
-                                                  "Order number: ${model.filteredOrdersWithServiceProvider[index].id.toString().toUpperCase()}",
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: white),
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                mainAxisSize: MainAxisSize.min,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    model
-                                                        .filteredOrdersWithServiceProvider[
-                                                            index]
-                                                        .status
-                                                        .toString()
-                                                        .toUpperCase(),
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: model
-                                                                    .filteredOrdersWithServiceProvider[
-                                                                        index]
-                                                                    .status ==
-                                                                "pending"
-                                                            ? sicklyYellow
-                                                            : model.filteredOrdersWithServiceProvider[index]
-                                                                        .status ==
-                                                                    "processing"
-                                                                ? brightLightBlue
-                                                                : weirdGreen),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0),
+                                                    child: Text(
+                                                      model
+                                                          .filteredOrdersWithServiceProvider[
+                                                              index]
+                                                          .lineItems[0]
+                                                          .name
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 21,
+                                                          color: white),
+                                                    ),
                                                   ),
-                                                  model.filteredOrdersWithServiceProvider[index]
-                                                              .status ==
-                                                          "completed"
-                                                      ? Container()
-                                                      : InkWell(
-                                                          onTap: () async {
-                                                            model
-                                                                .changeBusyState(
-                                                                    true);
-                                                            if (model
-                                                                        .filteredOrdersWithServiceProvider[
-                                                                            index]
-                                                                        .status ==
-                                                                    "pending" ||
-                                                                model.filteringMatchingOrdersWithZero(
-                                                                    model.filteredOrdersWithServiceProvider[
-                                                                        index])) {
-                                                              await model.updateOrderWithDio(
-                                                                  model
-                                                                      .filteredOrdersWithServiceProvider[
-                                                                          index]
-                                                                      .id,
-                                                                  OrderStatus
-                                                                      .pending,
-                                                                  model.filteredOrdersWithServiceProvider[
-                                                                      index]);
-                                                              await model
-                                                                  .getAllOrders(
-                                                                      "");
-                                                            } else {
-                                                              await model.updateOrderWithDio(
-                                                                  model
-                                                                      .filteredOrdersWithServiceProvider[
-                                                                          index]
-                                                                      .id,
-                                                                  OrderStatus
-                                                                      .processing,
-                                                                  model.filteredOrdersWithServiceProvider[
-                                                                      index]);
-                                                              await model
-                                                                  .getAllOrders(
-                                                                      "");
-                                                            }
-                                                          },
-                                                          child: Container(
-                                                            width:
-                                                                80.getWidth(),
-                                                            height:
-                                                                30.getHeight(),
-                                                            decoration: const BoxDecoration(
-                                                                color:
-                                                                    carnationPink,
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            20))),
-                                                            child: Center(
-                                                                child: Text(
-                                                              model.filteredOrdersWithServiceProvider[index].status ==
-                                                                          "pending" ||
-                                                                      model.filteringMatchingOrdersWithZero(
-                                                                          model.filteredOrdersWithServiceProvider[
-                                                                              index])
-                                                                  ? "Start"
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 6.0),
+                                                    child: Text(
+                                                      "Order number: ${model.filteredOrdersWithServiceProvider[index].id.toString().toUpperCase()}",
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: white),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    // color: white,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          model
+                                                              .filteredOrdersWithServiceProvider[
+                                                                  index]
+                                                              .status
+                                                              .toString()
+                                                              .toUpperCase(),
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: model
+                                                                          .filteredOrdersWithServiceProvider[
+                                                                              index]
+                                                                          .status ==
+                                                                      "pending"
+                                                                  ? sicklyYellow
                                                                   : model.filteredOrdersWithServiceProvider[index]
                                                                               .status ==
                                                                           "processing"
-                                                                      ? 'End'
-                                                                      : "",
-                                                              style:
-                                                                  const TextStyle(
-                                                                      color:
-                                                                          white,
-                                                                      fontSize:
-                                                                          20.0),
-                                                            )),
-                                                          ),
+                                                                      ? brightLightBlue
+                                                                      : weirdGreen),
                                                         ),
+                                                        model.filteredOrdersWithServiceProvider[index]
+                                                                    .status ==
+                                                                "completed"
+                                                            ? Container()
+                                                            : InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (context) => OrderDetailsView(
+                                                                                  isMine: model.filteringMatchingOrders(model.filteredOrdersWithServiceProvider[index]),
+                                                                                  order: model
+                                                                                      .filteredOrdersWithServiceProvider[
+                                                                                  index]))).whenComplete(
+                                                                            () async {
+                                                                          model.changeBusyState(true);
+                                                                          await model.getAllOrders("");
+                                                                        },
+                                                                      );
+                                                                  // model
+                                                                  //     .changeBusyState(
+                                                                  //         true);
+                                                                  // if (model.filteredOrdersWithServiceProvider[index].status ==
+                                                                  //         "pending" ||
+                                                                  //     model.filteringMatchingOrdersWithZero(
+                                                                  //         model.filteredOrdersWithServiceProvider[
+                                                                  //             index])) {
+                                                                  //   await model.updateOrderWithDio(
+                                                                  //       model
+                                                                  //           .filteredOrdersWithServiceProvider[
+                                                                  //               index]
+                                                                  //           .id,
+                                                                  //       OrderStatus
+                                                                  //           .pending,
+                                                                  //       model.filteredOrdersWithServiceProvider[
+                                                                  //           index]);
+                                                                  //   await model
+                                                                  //       .getAllOrders(
+                                                                  //           "");
+                                                                  // } else {
+                                                                  //   await model.updateOrderWithDio(
+                                                                  //       model
+                                                                  //           .filteredOrdersWithServiceProvider[
+                                                                  //               index]
+                                                                  //           .id,
+                                                                  //       OrderStatus
+                                                                  //           .processing,
+                                                                  //       model.filteredOrdersWithServiceProvider[
+                                                                  //           index]);
+                                                                  //   await model
+                                                                  //       .getAllOrders(
+                                                                  //           "");
+                                                                  // }
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: 80
+                                                                      .getWidth(),
+                                                                  height: 30
+                                                                      .getHeight(),
+                                                                  decoration: const BoxDecoration(
+                                                                      color:
+                                                                          carnationPink,
+                                                                      borderRadius:
+                                                                          BorderRadius.all(
+                                                                              Radius.circular(20))),
+                                                                  child: Center(
+                                                                      child:
+                                                                          Text(
+                                                                    model.filteredOrdersWithServiceProvider[index].status ==
+                                                                                "pending" ||
+                                                                            model.filteringMatchingOrdersWithZero(model.filteredOrdersWithServiceProvider[
+                                                                                index])
+                                                                        ? "START"
+                                                                        : model.filteredOrdersWithServiceProvider[index].status ==
+                                                                                "processing"
+                                                                            ? 'END'
+                                                                            : "",
+                                                                    style: const TextStyle(
+                                                                        color:
+                                                                            white,
+                                                                        fontSize:
+                                                                            16.0),
+                                                                  )),
+                                                                ),
+                                                              ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   );
